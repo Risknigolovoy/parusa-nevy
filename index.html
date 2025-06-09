@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ПАРУСА НЕВЫ</title>
+  <style>
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+    body {
+      font-family: sans-serif;
+      background: linear-gradient(to bottom, #000018, #001122);
+      color: white;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+    header {
+      text-align: center;
+      padding: 2em 1em 0;
+      font-size: 2em;
+      font-weight: bold;
+    }
+    .logo {
+      width: 40px;
+      height: 40px;
+      margin: 0 auto 0.5em;
+    }
+
+    section {
+      height: 100vh;
+      padding: 2em 1em;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .bridge {
+      position: fixed;
+      top: 100px;
+      width: 50%;
+      height: 20px;
+      background: #555;
+      z-index: 1;
+    }
+    .bridge.left {
+      left: 0;
+      transform-origin: right bottom;
+    }
+    .bridge.right {
+      right: 0;
+      transform-origin: left bottom;
+    }
+
+    .bridges-up .bridge.left {
+      transform: rotate(-55deg);
+    }
+    .bridges-up .bridge.right {
+      transform: rotate(55deg);
+    }
+
+    .scene {
+      width: 100%;
+      height: 300px;
+      position: relative;
+      overflow: hidden;
+      background: #001b2e;
+    }
+    .pier {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 30px;
+      background: #444;
+    }
+    .people {
+      position: absolute;
+      bottom: 30px;
+      left: 20%;
+      display: flex;
+      gap: 10px;
+      animation: board 4s ease-in-out infinite alternate;
+    }
+    .people div {
+      width: 10px;
+      height: 20px;
+      background: #ccc;
+    }
+
+    @keyframes board {
+      0% { left: 20%; }
+      100% { left: 45%; }
+    }
+
+    .ship {
+      position: absolute;
+      bottom: 30px;
+      left: -200px;
+      animation: sailLoop 20s linear infinite;
+    }
+
+    @keyframes sailLoop {
+      0% { left: -200px; }
+      100% { left: 110%; }
+    }
+
+    .whatsapp {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      background: #25D366;
+      color: white;
+      padding: 0.7em 1.2em;
+      border-radius: 30px;
+      font-size: 1em;
+      text-decoration: none;
+      z-index: 1001;
+    }
+
+    .visual {
+      margin-top: 20px;
+      width: 100px;
+      height: 80px;
+      background: #ccc;
+      border-radius: 10px;
+      opacity: 0.2;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="logo">
+    <svg viewBox="0 0 100 100">
+      <polygon points="50,10 90,90 10,90" stroke="white" stroke-width="3" fill="none"/>
+    </svg>
+  </div>
+  <header>ПАРУСА НЕВЫ</header>
+
+  <div class="bridge left"></div>
+  <div class="bridge right"></div>
+
+  <section class="scroll-block">
+    <h2>🌞 Дневной маршрут</h2>
+    <p>До крейсера «Аврора» и Финского залива — 1.5 часа</p>
+    <div class="visual"></div>
+  </section>
+
+  <section class="scroll-block">
+    <h2>🌃 Ночной маршрут</h2>
+    <p>Финский залив и 5 мостов — 3 часа</p>
+    <div class="visual"></div>
+  </section>
+
+  <section class="scroll-block">
+    <h2>🚤 Прогулки по каналам</h2>
+    <p>Каждые 40 минут: Нева — Фонтанка — Крюков канал — Мойка</p>
+    <div class="visual"></div>
+  </section>
+
+  <section>
+    <h2>🎬 Причал и посадка</h2>
+    <div class="scene">
+      <div class="pier"></div>
+      <div class="people">
+        <div></div><div></div><div></div>
+      </div>
+      <svg class="ship" width="200" height="100" viewBox="0 0 200 100">
+        <rect x="10" y="60" width="180" height="25" fill="#bbb"/>
+        <rect x="40" y="40" width="120" height="20" fill="#999"/>
+        <rect x="50" y="45" width="10" height="10" fill="#333"/>
+        <rect x="70" y="45" width="10" height="10" fill="#333"/>
+        <rect x="90" y="45" width="10" height="10" fill="#333"/>
+        <rect x="110" y="45" width="10" height="10" fill="#333"/>
+        <rect x="130" y="45" width="10" height="10" fill="#333"/>
+      </svg>
+    </div>
+  </section>
+
+  <a href="https://wa.me/79963366924" class="whatsapp">Написать в WhatsApp</a>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    });
+
+    document.querySelectorAll('.scroll-block').forEach(section => {
+      observer.observe(section);
+    });
+
+    let lastScrollTop = 0;
+    window.addEventListener("scroll", function(){
+      let st = window.scrollY;
+      if (st > lastScrollTop){
+        document.body.classList.add("bridges-up");
+      } else {
+        document.body.classList.remove("bridges-up");
+      }
+      lastScrollTop = st <= 0 ? 0 : st;
+    }, false);
+  </script>
+
+</body>
+</html>
