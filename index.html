@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ПАРУСА НЕВЫ</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      font-family: Arial, sans-serif;
+      background: #000;
+      color: #fff;
+      scroll-behavior: smooth;
+    }
+
+    header {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 1em;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      gap: 2em;
+      border-bottom: 1px solid #222;
+    }
+
+    header a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.95em;
+    }
+
+    header a:hover {
+      color: #25D366;
+    }
+
+    section {
+      padding: 100px 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1s ease-out;
+      background-size: cover;
+      background-position: center;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h1, h2 {
+      font-size: 2em;
+      margin-bottom: 0.5em;
+      text-align: center;
+    }
+
+    p {
+      font-size: 1.1em;
+      max-width: 700px;
+      text-align: center;
+      line-height: 1.5em;
+    }
+
+    .hero {
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/4/45/Dvortsovyy_bridge_draw.jpg');
+      text-shadow: 0 0 8px black;
+    }
+
+    .hero-content {
+      background: rgba(0,0,0,0.6);
+      padding: 2em;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .whatsapp {
+      margin-top: 1.5em;
+      background: #25D366;
+      padding: 1em 2em;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 1.1em;
+    }
+
+    .img-block {
+      width: 100%;
+      max-width: 800px;
+      margin: 20px 0;
+    }
+
+    .img-block img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    footer {
+      background: #111;
+      padding: 20px;
+      text-align: center;
+      color: #777;
+    }
+
+    .arrow {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2em;
+      animation: bounce 2s infinite;
+      color: #25D366;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translate(-50%, 0); }
+      50% { transform: translate(-50%, 10px); }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="#hero">Главная</a>
+  <a href="#day">Днём</a>
+  <a href="#night">Ночью</a>
+  <a href="#canals">Каналы</a>
+  <a href="#weather">Погода</a>
+</header>
+
+<section id="hero" class="hero visible">
+  <div class="hero-content">
+    <h1>ПАРУСА НЕВЫ</h1>
+    <p>Экскурсии по рекам и каналам Санкт-Петербурга: днём, ночью, индивидуально</p>
+    <a class="whatsapp" href="https://wa.me/79963366924" target="_blank">📩 Записаться в WhatsApp</a>
+    <div class="arrow">⬇</div>
+  </div>
+</section>
+
+<section id="day" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/9/9d/Aurora_Cruiser_SPB.jpg');">
+  <h2>🚤 Дневные прогулки</h2>
+  <p>Маршрут до крейсера Аврора и до Финского залива. Продолжительность — 1 час 30 минут. Свет, воздух и открытая Нева — отличное дневное приключение!</p>
+</section>
+
+<section id="night" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/24/St._Petersburg_Bridge_Opening.jpg');">
+  <h2>🌉 Ночные прогулки</h2>
+  <p>Ночной маршрут по Финскому заливу с разводом пяти мостов. Город в огнях, музыка и магия воды. Продолжительность — 3 часа.</p>
+</section>
+
+<section id="canals" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/d/d2/St_Petersburg_canals.jpg');">
+  <h2>🌊 Прогулки по рекам и каналам</h2>
+  <p>Отправление каждые 40 минут. Круговой маршрут: Нева — Фонтанка — Крюков канал — Мойка. Водный Петербург, как он есть.</p>
+</section>
+
+<section id="weather">
+  <h2>🌦 Прогноз погоды</h2>
+  <div id="weather-widget">
+    <iframe src="https://openweathermap.org/widget/city?city=498817&units=metric&theme=dark"
+            width="100%" height="200" frameborder="0"></iframe>
+  </div>
+</section>
+
+<footer>
+  Адмиралтейство, д. 10 · © Паруса Невы
+</footer>
+
+<script>
+  const sections = document.querySelectorAll("section");
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) {
+        entry.target.classList.add("visible");
+      }
+    });
+  }, { threshold: 0.2 });
+
+  sections.forEach(section => observer.observe(section));
+</script>
+
+</body>
+</html>
