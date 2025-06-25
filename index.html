@@ -11,41 +11,32 @@
         50% { opacity: 1; }
     }
     
-    @keyframes ship-sail {
-        0% { transform: translateX(-150px) translateY(5px) rotate(-2deg); }
-        50% { transform: translateX(150px) translateY(0px) rotate(2deg); }
-        100% { transform: translateX(-150px) translateY(5px) rotate(-2deg); }
+    /* Новая анимация для корабля */
+    @keyframes sail-through {
+        0% { transform: translateX(-100vw) translateY(5px) rotate(-2deg); }
+        100% { transform: translateX(100vw) translateY(-5px) rotate(2deg); }
     }
 
     body {
-        background-color: #0c0d1f; /* Еще более глубокий синий */
+        background-color: #0c0d1f;
         color: #eef;
         font-family: 'Helvetica Neue', sans-serif;
         margin: 0;
         padding: 0;
-        overflow-x: hidden; /* Запрещаем горизонтальный скролл */
+        overflow-x: hidden;
     }
 
     /* ----- Контейнеры и Секции ----- */
     .scroll-container {
-        height: 200vh; /* Создаем длинную страницу для скролла */
-        position: relative;
-    }
-
-    .section {
-        min-height: 100vh;
+        min-height: 150vh; /* Уменьшаем высоту, так как контент внизу */
         display: flex;
-        flex-direction: column;
         justify-content: center;
         align-items: center;
         position: relative;
-        text-align: center;
-        padding: 2rem;
-        box-sizing: border-box;
     }
 
-    /* ----- Элементы сцены: Звезды, Луна, Кораблик ----- */
-    .stars {
+    /* ----- Элементы сцены: Звезды, Луна ----- */
+    .stars, .moon {
         position: fixed;
         top: 0;
         left: 0;
@@ -67,53 +58,55 @@
         border-radius: 50%;
         background: #f5f5f5;
         box-shadow: 0 0 30px #f5f5f5, inset -10px 2px 0 0 #ccc;
-        position: fixed; /* Фиксируем на небе */
         top: 15vh;
-        right: 20vw;
-        z-index: -1;
+        left: 20vw; /* Переместил луну для разнообразия */
     }
 
-    .ship {
-        width: 50px;
-        height: 50px;
-        /* Силуэт кораблика из SVG */
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M20,80 L80,80 L70,60 L30,60 Z' fill='%23fff' opacity='0.5'/%3E%3Cpath d='M45,60 L45,30 L65,45 Z' fill='%23fff' opacity='0.8'/%3E%3C/svg%3E");
-        position: absolute;
-        bottom: 12vh;
-        left: 50%;
-        z-index: 10;
-        animation: ship-sail 40s infinite linear;
-    }
-
-    /* ----- Контент: Логотип, Время ----- */
+    /* ----- Логотип ----- */
     .logo-container {
-        margin-top: 25vh; /* Опускаем логотип ниже */
+        position: absolute;
+        top: 30vh;
+        left: 50%;
+        transform: translateX(-50%);
     }
 
     .logo-container img {
-        max-width: 180px; /* Делаем лого чуть меньше */
+        max-width: 180px;
         filter: drop-shadow(0 0 15px rgba(255,255,255,0.3));
     }
 
+    /* ----- Контент внизу: Время, Река, Мост, Корабль ----- */
+    .bottom-scene {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 30vh; /* Зона для всех нижних элементов */
+    }
+
     .boarding-info {
-        margin-top: 10vh; /* Отступ для блока с временем */
+        position: absolute;
+        bottom: 18vh; /* Над мостом */
+        width: 100%;
+        text-align: center;
+        z-index: 10;
     }
 
     .time-slot {
-        font-size: 1.5rem;
-        letter-spacing: 0.2rem;
-        margin: 20px 0;
+        display: inline-block;
+        font-size: 1.2rem;
+        letter-spacing: 0.1rem;
+        margin: 0 15px;
         cursor: pointer;
         transition: color 0.4s, letter-spacing 0.4s;
-        color: rgba(238, 238, 255, 0.5);
+        color: rgba(238, 238, 255, 0.4);
     }
 
     .time-slot:hover {
-        letter-spacing: 0.4rem;
+        letter-spacing: 0.2rem;
         color: rgba(238, 238, 255, 1);
     }
-    
-    /* ----- Река и Мост (CSS-only) ----- */
+
     .river {
         width: 100%;
         height: 15vh;
@@ -126,7 +119,7 @@
     
     .bridge-container {
         position: absolute;
-        bottom: 10vh; /* Позиция над водой */
+        bottom: 10vh;
         left: 50%;
         width: 400px;
         height: 100px;
@@ -145,22 +138,30 @@
         transition: transform 1s ease-in-out;
     }
 
-    .left {
+    .left { left: 0; transform-origin: bottom left; }
+    .right { right: 0; transform-origin: bottom right; }
+    
+    .bridge-container:hover .left { transform: rotate(-35deg); }
+    .bridge-container:hover .right { transform: rotate(35deg); }
+
+    .ship {
+        width: 80px; /* Увеличим корабль */
+        height: 80px;
+        /* ОБНОВЛЕННЫЙ ДВУХПАЛУБНЫЙ КОРАБЛЬ (SVG) */
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M10,80 L90,80 L80,65 L20,65 Z' fill='%23fff' opacity='0.4'/%3E%3Cpath d='M25,65 L75,65 L70,50 L30,50 Z' fill='%23fff' opacity='0.5'/%3E%3Cpath d='M48,50 L48,20 L65,35 Z' fill='%23fff' opacity='0.7'/%3E%3C/svg%3E");
+        background-size: contain;
+        background-repeat: no-repeat;
+        position: absolute;
+        bottom: 9vh; /* Позиция по вертикали, чтобы плыть по реке */
         left: 0;
-        transform-origin: bottom left;
+        z-index: 3; /* Между пролетами моста */
+        transform: translateX(-100px); /* Изначально спрятан */
+        pointer-events: none; /* Чтобы не мешал наводить на мост */
     }
 
-    .right {
-        right: 0;
-        transform-origin: bottom right;
-    }
-    
-    /* Анимация разводки моста при наведении */
-    .bridge-container:hover .left {
-        transform: rotate(-35deg);
-    }
-    .bridge-container:hover .right {
-        transform: rotate(35deg);
+    /* Класс, который запускает анимацию проплывания */
+    .ship.sailing {
+        animation: sail-through 20s linear;
     }
 
 </style>
@@ -171,37 +172,35 @@
 <div class="moon"></div>
 
 <div class="scroll-container">
-    
-    <div class="section">
-        <div class="logo-container">
-            <img src="http://googleusercontent.com/image_generation_content/0" alt="Логотип">
-        </div>
+    <div class="logo-container">
+        <img src="http://googleusercontent.com/image_generation_content/0" alt="Логотип">
+    </div>
+</div>
 
-        <div class="boarding-info">
-            <div class="time-slot">23:15</div>
-            <div class="time-slot">23:30</div>
-            <div class="time-slot">23:45</div>
-        </div>
+<div class="bottom-scene">
+    <div class="boarding-info">
+        <div class="time-slot">23:15</div>
+        <div class="time-slot">23:30</div>
+        <div class="time-slot">23:45</div>
     </div>
 
+    <div class="bridge-container" id="bridge">
+        <div class="bridge-leaf left"></div>
+        <div class="bridge-leaf right"></div>
+    </div>
+    
+    <div class="ship" id="ship"></div>
+
+    <div class="river"></div>
 </div>
-
-<div class="river"></div>
-
-<div class="bridge-container" title="Наведите, чтобы развести мост">
-    <div class="bridge-leaf left"></div>
-    <div class="bridge-leaf right"></div>
-</div>
-
-<div class="ship"></div>
 
 
 <script>
-    // ----- Скрипт для генерации случайных звезд -----
+    // ----- Скрипт для звезд (без изменений) -----
     document.addEventListener('DOMContentLoaded', function() {
         const starsContainer = document.querySelector('.stars');
+        if (!starsContainer) return;
         const numStars = 100;
-
         for (let i = 0; i < numStars; i++) {
             let star = document.createElement('div');
             star.className = 'star';
@@ -210,11 +209,29 @@
             star.style.height = size + 'px';
             star.style.top = Math.random() * 100 + '%';
             star.style.left = Math.random() * 100 + '%';
-            // Разная задержка анимации для более естественного мерцания
             star.style.animationDelay = Math.random() * 4 + 's';
             starsContainer.appendChild(star);
         }
     });
+
+    // ----- НОВЫЙ СКРИПТ для анимации корабля и моста -----
+    const bridge = document.getElementById('bridge');
+    const ship = document.getElementById('ship');
+
+    if (bridge && ship) {
+        // Запускаем анимацию, когда курсор НАД мостом
+        bridge.addEventListener('mouseenter', () => {
+            // Запускаем только если корабль не плывет в данный момент
+            if (!ship.classList.contains('sailing')) {
+                ship.classList.add('sailing');
+            }
+        });
+
+        // Сбрасываем анимацию, когда корабль закончил плыть
+        ship.addEventListener('animationend', () => {
+            ship.classList.remove('sailing');
+        });
+    }
 </script>
 
 </body>
