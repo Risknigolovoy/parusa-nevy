@@ -15,7 +15,7 @@
         scrollbar-color: #334 #0c0d1f;
     }
 
-    /* ----- Верхняя секция (для создания прокрутки) ----- */
+    /* ----- Верхняя секция ----- */
     .hero-section {
         height: 120vh;
         display: flex;
@@ -52,14 +52,12 @@
         font-size: 1.2rem;
     }
 
-
     /* ----- Основная секция ----- */
     .main-content {
         position: relative;
         padding-bottom: 20vh;
         background: #0c0d1f;
     }
-    
     .river {
         position: absolute;
         bottom: 0;
@@ -127,25 +125,23 @@
         margin-bottom: 20px;
     }
     
-    /* SVG для трех разных кораблей */
-    .ship-1 {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M10,80 L90,80 L80,65 L20,65 Z' fill='%239ab'/%3E%3Cpath d='M25,65 L75,65 L70,50 L30,50 Z' fill='%23cde'/%3E%3Cpath d='M48,50 L48,20 L65,35 Z' fill='%23fff'/%3E%3C/svg%3E");
-    }
-    .ship-2 {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M10,80 L90,80 L85,60 L15,60 Z' fill='%239ab'/%3E%3Cpath d='M20,60 L80,60 L75,45 L25,45 Z' fill='%23cde'/%3E%3Crect x='48' y='25' width='4' height='20' fill='%23fff'/%3E%3C/svg%3E");
-    }
-    .ship-3 {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M15,80 L85,80 L75,68 L25,68 Z' fill='%239ab'/%3E%3Cpath d='M30,68 L70,68 L65,55 L35,55 Z' fill='%23cde'/%3E%3Cpath d='M45,55 L45,30 L60,42 Z' fill='%23fff'/%3E%3C/svg%3E");
-    }
+    /* SVG кораблей */
+    .ship-1 { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M10,80 L90,80 L80,65 L20,65 Z' fill='%239ab'/%3E%3Cpath d='M25,65 L75,65 L70,50 L30,50 Z' fill='%23cde'/%3E%3Cpath d='M48,50 L48,20 L65,35 Z' fill='%23fff'/%3E%3C/svg%3E"); }
+    .ship-2 { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M10,80 L90,80 L85,60 L15,60 Z' fill='%239ab'/%3E%3Cpath d='M20,60 L80,60 L75,45 L25,45 Z' fill='%23cde'/%3E%3Crect x='48' y='25' width='4' height='20' fill='%23fff'/%3E%3C/svg%3E"); }
+    .ship-3 { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M15,80 L85,80 L75,68 L25,68 Z' fill='%239ab'/%3E%3Cpath d='M30,68 L70,68 L65,55 L35,55 Z' fill='%23cde'/%3E%3Cpath d='M45,55 L45,30 L60,42 Z' fill='%23fff'/%3E%3C/svg%3E"); }
 
-    /* ----- ОБНОВЛЕНО: Слайдеры с фото ----- */
-    @keyframes slide-left-to-right {
-        from { transform: translateX(-50%); }
-        to { transform: translateX(0%); }
+    /* ----- Слайдер "одно фото за раз" ----- */
+    @keyframes slide-one-by-one-4 { /* Анимация для 4 фото */
+        0%, 20%   { transform: translateX(0%); }      /* Фото 1 */
+        25%, 45%  { transform: translateX(-25%); }     /* Фото 2 */
+        50%, 70%  { transform: translateX(-50%); }     /* Фото 3 */
+        75%, 95%  { transform: translateX(-75%); }     /* Фото 4 */
+        100%      { transform: translateX(0%); }      /* Возврат к началу */
     }
-    @keyframes slide-right-to-left {
-        from { transform: translateX(0%); }
-        to { transform: translateX(-50%); }
+     @keyframes slide-one-by-one-2 { /* Анимация для 2 фото */
+        0%, 45%   { transform: translateX(0%); }      /* Фото 1 */
+        50%, 95%  { transform: translateX(-50%); }     /* Фото 2 */
+        100%      { transform: translateX(0%); }      /* Возврат к началу */
     }
 
     .slider-container {
@@ -156,30 +152,22 @@
     }
     .slider-track {
         display: flex;
-        width: 200%; /* Содержит 2 блока по 100% */
+        transition: transform 0.5s ease-in-out;
     }
-    .slider-track.rtl {
-        animation: slide-right-to-left 30s linear infinite;
+    .slider-track-4-photos {
+        width: 400%; /* 4 фото * 100% */
+        animation: slide-one-by-one-4 16s linear infinite;
     }
-    .slider-track.ltr {
-        animation: slide-left-to-right 30s linear infinite;
-    }
-    .slider-images-block {
-        width: 50%; /* Каждый блок занимает половину трека */
-        display: flex;
-        flex-shrink: 0;
+    .slider-track-2-photos {
+        width: 200%; /* 2 фото * 100% */
+        animation: slide-one-by-one-2 8s linear infinite;
     }
     .slide-photo {
-        width: 25%; /* Каждое фото занимает 1/4 блока (для 4 фото) */
-        flex-shrink: 0;
         height: 120px;
-        object-fit: cover; /* Чтобы фото не искажалось */
+        object-fit: cover; /* Картинка будет заполнять блок, не искажаясь */
     }
-    
-    /* Специальный стиль для слайдера с 2 фото */
-    .two-photos .slide-photo {
-        width: 50%; /* Каждое фото занимает 1/2 блока */
-    }
+    .slider-track-4-photos .slide-photo { width: 25%; } /* 1/4 от ширины трека */
+    .slider-track-2-photos .slide-photo { width: 50%; } /* 1/2 от ширины трека */
 
 </style>
 </head>
@@ -204,53 +192,31 @@
             <div class="ship-visual ship-1"></div>
             <div class="ship-label">Москва 74</div>
             <div class="slider-container">
-                <div class="slider-track rtl">
-                    <div class="slider-images-block">
-                        <img src="images/moskva-74_01.PNG" alt="Фото теплохода Москва 74" class="slide-photo">
-                        <img src="images/moskva-74_02.PNG" alt="Интерьер теплохода Москва 74" class="slide-photo">
-                        <img src="images/moskva-74_03.PNG" alt="Палуба теплохода Москва 74" class="slide-photo">
-                        <img src="images/moskva-74_04.PNG" alt="Вид с теплохода Москва 74" class="slide-photo">
-                    </div>
-                    <div class="slider-images-block">
-                        <img src="images/moskva-74_01.PNG" alt="Фото теплохода Москва 74" class="slide-photo">
-                        <img src="images/moskva-74_02.PNG" alt="Интерьер теплохода Москва 74" class="slide-photo">
-                        <img src="images/moskva-74_03.PNG" alt="Палуба теплохода Москва 74" class="slide-photo">
-                        <img src="images/moskva-74_04.PNG" alt="Вид с теплохода Москва 74" class="slide-photo">
-                    </div>
+                <div class="slider-track slider-track-4-photos">
+                    <img src="https://placehold.co/400x300/6e7fca/ffffff?text=Фото+1" alt="Фото 1" class="slide-photo">
+                    <img src="https://placehold.co/400x300/ca6e7f/ffffff?text=Фото+2" alt="Фото 2" class="slide-photo">
+                    <img src="https://placehold.co/400x300/7fca6e/ffffff?text=Фото+3" alt="Фото 3" class="slide-photo">
+                    <img src="https://placehold.co/400x300/caae6e/ffffff?text=Фото+4" alt="Фото 4" class="slide-photo">
                 </div>
             </div>
         </div>
-
         <div class="ship-item">
             <div class="ship-visual ship-2"></div>
             <div class="ship-label">Москва 202</div>
             <div class="slider-container">
-                <div class="slider-track ltr">
-                    <div class="slider-images-block two-photos">
-                        <img src="images/moskva-202_01.PNG" alt="Фото теплохода Москва 202" class="slide-photo">
-                        <img src="images/moskva-202_02.PNG" alt="Интерьер теплохода Москва 202" class="slide-photo">
-                    </div>
-                    <div class="slider-images-block two-photos">
-                        <img src="images/moskva-202_01.PNG" alt="Фото теплохода Москва 202" class="slide-photo">
-                        <img src="images/moskva-202_02.PNG" alt="Интерьер теплохода Москва 202" class="slide-photo">
-                    </div>
+                <div class="slider-track slider-track-2-photos">
+                    <img src="https://placehold.co/400x300/4a5a94/ffffff?text=Фото+A" alt="Фото A" class="slide-photo">
+                    <img src="https://placehold.co/400x300/944a5a/ffffff?text=Фото+B" alt="Фото B" class="slide-photo">
                 </div>
             </div>
         </div>
-
         <div class="ship-item">
             <div class="ship-visual ship-3"></div>
             <div class="ship-label">Москва 85</div>
             <div class="slider-container">
-                <div class="slider-track rtl">
-                     <div class="slider-images-block two-photos">
-                        <img src="images/moskva-85_01.PNG" alt="Фото теплохода Москва 85" class="slide-photo">
-                        <img src="images/moskva-85_02.PNG" alt="Интерьер теплохода Москва 85" class="slide-photo">
-                    </div>
-                     <div class="slider-images-block two-photos">
-                        <img src="images/moskva-85_01.PNG" alt="Фото теплохода Москва 85" class="slide-photo">
-                        <img src="images/moskva-85_02.PNG" alt="Интерьер теплохода Москва 85" class="slide-photo">
-                    </div>
+                <div class="slider-track slider-track-2-photos">
+                    <img src="https://placehold.co/400x300/5a946e/ffffff?text=Фото+X" alt="Фото X" class="slide-photo">
+                    <img src="https://placehold.co/400x300/94835a/ffffff?text=Фото+Y" alt="Фото Y" class="slide-photo">
                 </div>
             </div>
         </div>
@@ -270,22 +236,40 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleScroll() {
         if (!bridgeContainer || !leftLeaf || !rightLeaf) return;
 
+        // Определяем "зону анимации" моста
         const rect = bridgeContainer.getBoundingClientRect();
         const viewportHeight = window.innerHeight;
+
+        // Начало анимации, когда ВЕРХ контейнера моста доходит до 75% высоты экрана
         const animationStartPoint = viewportHeight * 0.75;
+        
+        // Конец анимации, когда ВЕРХ контейнера моста доходит до 25% высоты экрана
         const animationEndPoint = viewportHeight * 0.25;
+
+        // Расстояние, за которое происходит анимация
         const animationDistance = animationStartPoint - animationEndPoint;
+        
+        // Текущая позиция верха контейнера относительно точки старта
         const currentPosition = animationStartPoint - rect.top;
+
+        // Вычисляем прогресс анимации (от 0.0 до 1.0)
         let progress = currentPosition / animationDistance;
+        
+        // Ограничиваем прогресс в пределах от 0 до 1
         progress = Math.max(0, Math.min(1, progress));
+
+        // Вычисляем текущий угол на основе прогресса
         const currentAngle = maxAngle * progress;
 
+        // Применяем трансформацию к створкам моста
+        // requestAnimationFrame делает анимацию более плавной
         window.requestAnimationFrame(() => {
             leftLeaf.style.transform = `rotate(${-currentAngle}deg)`;
             rightLeaf.style.transform = `rotate(${currentAngle}deg)`;
         });
     }
 
+    // Вешаем обработчик на событие скролла
     window.addEventListener('scroll', handleScroll, { passive: true });
 });
 </script>
