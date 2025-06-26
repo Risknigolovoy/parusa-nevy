@@ -1,278 +1,50 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Паруса Невы</title>
-<style>
-    /* ----- Глобальные стили ----- */
-    body {
-        background-color: #0c0d1f;
-        color: #eef;
-        font-family: 'Helvetica Neue', sans-serif;
-        margin: 0;
-        padding: 0;
-        scrollbar-color: #334 #0c0d1f;
-    }
-
-    /* ----- Верхняя секция ----- */
-    .hero-section {
-        height: 120vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        text-align: center;
-    }
-    .moon {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        background: #f5f5f5;
-        box-shadow: 0 0 40px -10px #f5f5f5, inset -15px 5px 0 0 #ccc;
-        position: absolute;
-        top: 15vh;
-        right: 15vw;
-    }
-    .hero-section .logo-container img {
-        max-width: 180px;
-    }
-    .scroll-prompt {
-        position: absolute;
-        bottom: 5vh;
-        font-size: 0.8rem;
-        color: rgba(238, 238, 255, 0.4);
-        letter-spacing: 0.1rem;
-    }
-     .scroll-prompt::after {
-        content: '↓';
-        display: block;
-        margin-top: 5px;
-        font-size: 1.2rem;
-    }
-
-    /* ----- Основная секция ----- */
-    .main-content {
-        position: relative;
-        padding-bottom: 20vh;
-        background: #0c0d1f;
-    }
-    .river {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 50vh;
-        background: #101828;
-        z-index: 1;
-    }
-
-    /* ----- Мост ----- */
-    .bridge-container {
-        position: relative;
-        width: 100%;
-        height: 150px;
-        z-index: 10;
-        margin-top: 10vh;
-    }
-    .bridge-leaf {
-        position: absolute;
-        bottom: 50px;
-        width: 50%;
-        height: 20px;
-        background: #334;
-        border-top: 3px solid #667;
-    }
-    .left {
-        left: 0;
-        transform-origin: bottom left;
-    }
-    .right {
-        right: 0;
-        transform-origin: bottom right;
-    }
-    
-    /* ----- Галерея кораблей ----- */
-    .ship-gallery {
-        display: flex;
-        justify-content: space-around;
-        align-items: flex-start;
-        position: relative;
-        z-index: 5;
-        padding: 5vh 5%;
-        margin-top: 15vh;
-    }
-    .ship-item {
-        text-align: center;
-        width: 30%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .ship-visual {
-        height: 100px;
-        width: 100%;
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center bottom;
-        margin-bottom: 15px;
-    }
-    .ship-label {
-        font-size: 1.1rem;
-        font-weight: bold;
-        color: #fff;
-        margin-bottom: 20px;
-    }
-    
-    /* SVG кораблей */
-    .ship-1 { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M10,80 L90,80 L80,65 L20,65 Z' fill='%239ab'/%3E%3Cpath d='M25,65 L75,65 L70,50 L30,50 Z' fill='%23cde'/%3E%3Cpath d='M48,50 L48,20 L65,35 Z' fill='%23fff'/%3E%3C/svg%3E"); }
-    .ship-2 { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M10,80 L90,80 L85,60 L15,60 Z' fill='%239ab'/%3E%3Cpath d='M20,60 L80,60 L75,45 L25,45 Z' fill='%23cde'/%3E%3Crect x='48' y='25' width='4' height='20' fill='%23fff'/%3E%3C/svg%3E"); }
-    .ship-3 { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M15,80 L85,80 L75,68 L25,68 Z' fill='%239ab'/%3E%3Cpath d='M30,68 L70,68 L65,55 L35,55 Z' fill='%23cde'/%3E%3Cpath d='M45,55 L45,30 L60,42 Z' fill='%23fff'/%3E%3C/svg%3E"); }
-
-    /* ----- Слайдер "одно фото за раз" ----- */
-    @keyframes slide-one-by-one-4 { /* Анимация для 4 фото */
-        0%, 20%   { transform: translateX(0%); }      /* Фото 1 */
-        25%, 45%  { transform: translateX(-25%); }     /* Фото 2 */
-        50%, 70%  { transform: translateX(-50%); }     /* Фото 3 */
-        75%, 95%  { transform: translateX(-75%); }     /* Фото 4 */
-        100%      { transform: translateX(0%); }      /* Возврат к началу */
-    }
-     @keyframes slide-one-by-one-2 { /* Анимация для 2 фото */
-        0%, 45%   { transform: translateX(0%); }      /* Фото 1 */
-        50%, 95%  { transform: translateX(-50%); }     /* Фото 2 */
-        100%      { transform: translateX(0%); }      /* Возврат к началу */
-    }
-
-    .slider-container {
-        width: 100%;
-        overflow: hidden;
-        border-radius: 8px;
-        background-color: #223;
-    }
-    .slider-track {
-        display: flex;
-        transition: transform 0.5s ease-in-out;
-    }
-    .slider-track-4-photos {
-        width: 400%; /* 4 фото * 100% */
-        animation: slide-one-by-one-4 16s linear infinite;
-    }
-    .slider-track-2-photos {
-        width: 200%; /* 2 фото * 100% */
-        animation: slide-one-by-one-2 8s linear infinite;
-    }
-    .slide-photo {
-        height: 120px;
-        object-fit: cover; /* Картинка будет заполнять блок, не искажаясь */
-    }
-    .slider-track-4-photos .slide-photo { width: 25%; } /* 1/4 от ширины трека */
-    .slider-track-2-photos .slide-photo { width: 50%; } /* 1/2 от ширины трека */
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ночная прогулка с дискотекой</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<section class="hero-section">
-    <div class="moon"></div>
-    <div class="logo-container">
-        <img src="http://googleusercontent.com/image_generation_content/0" alt="Логотип">
-    </div>
-    <p class="scroll-prompt">Прокручивайте страницу</p>
-</section>
-
-<main class="main-content">
-    <div class="bridge-container" id="bridge-container">
-        <div class="bridge-leaf left" id="bridge-left"></div>
-        <div class="bridge-leaf right" id="bridge-right"></div>
-    </div>
-
-    <div class="ship-gallery">
-        <div class="ship-item">
-            <div class="ship-visual ship-1"></div>
-            <div class="ship-label">Москва 74</div>
-            <div class="slider-container">
-                <div class="slider-track slider-track-4-photos">
-                    <img src="https://placehold.co/400x300/6e7fca/ffffff?text=Фото+1" alt="Фото 1" class="slide-photo">
-                    <img src="https://placehold.co/400x300/ca6e7f/ffffff?text=Фото+2" alt="Фото 2" class="slide-photo">
-                    <img src="https://placehold.co/400x300/7fca6e/ffffff?text=Фото+3" alt="Фото 3" class="slide-photo">
-                    <img src="https://placehold.co/400x300/caae6e/ffffff?text=Фото+4" alt="Фото 4" class="slide-photo">
-                </div>
+    <header class="hero">
+        <div class="animation-container">
             </div>
+        <div class="hero-text">
+            <h1>Ночная речная прогулка с дискотекой</h1>
+            <p>Незабываемое путешествие по огням ночного города</p>
         </div>
-        <div class="ship-item">
-            <div class="ship-visual ship-2"></div>
-            <div class="ship-label">Москва 202</div>
-            <div class="slider-container">
-                <div class="slider-track slider-track-2-photos">
-                    <img src="https://placehold.co/400x300/4a5a94/ffffff?text=Фото+A" alt="Фото A" class="slide-photo">
-                    <img src="https://placehold.co/400x300/944a5a/ffffff?text=Фото+B" alt="Фото B" class="slide-photo">
-                </div>
+    </header>
+
+    <main>
+        <section id="about">
+            <h2>Что вас ждет?</h2>
+            <p>Зажигательная дискотека под открытым небом, лучшие диджеи, потрясающие виды на ночной город и море впечатлений!</p>
+        </section>
+
+        <section id="gallery">
+            <h2>Галерея</h2>
+            <div class="photo-grid">
+                <img src="URL_ВАШЕЙ_ФОТОГРАФИИ_1.PNG" alt="Фото с прогулки 1">
+                <img src="URL_ВАШЕЙ_ФОТОГРАФИИ_2.PNG" alt="Фото с прогулки 2">
+                <img src="URL_ВАШЕЙ_ФОТОГРАФИИ_3.PNG" alt="Фото с прогулки 3">
             </div>
-        </div>
-        <div class="ship-item">
-            <div class="ship-visual ship-3"></div>
-            <div class="ship-label">Москва 85</div>
-            <div class="slider-container">
-                <div class="slider-track slider-track-2-photos">
-                    <img src="https://placehold.co/400x300/5a946e/ffffff?text=Фото+X" alt="Фото X" class="slide-photo">
-                    <img src="https://placehold.co/400x300/94835a/ffffff?text=Фото+Y" alt="Фото Y" class="slide-photo">
-                </div>
+        </section>
+
+        <section id="pricing">
+            <h2>Стоимость</h2>
+            <div class="price">
+                <p>от <span>1500 ₽</span></p>
+                <a href="#contact" class="button">Забронировать</a>
             </div>
-        </div>
-    </div>
-    <div class="river"></div>
-</main>
+        </section>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    // ----- Скрипт для управления мостом при скролле -----
-    const bridgeContainer = document.getElementById('bridge-container');
-    const leftLeaf = document.getElementById('bridge-left');
-    const rightLeaf = document.getElementById('bridge-right');
-
-    const maxAngle = 45; // Максимальный угол развода моста в градусах
-
-    function handleScroll() {
-        if (!bridgeContainer || !leftLeaf || !rightLeaf) return;
-
-        // Определяем "зону анимации" моста
-        const rect = bridgeContainer.getBoundingClientRect();
-        const viewportHeight = window.innerHeight;
-
-        // Начало анимации, когда ВЕРХ контейнера моста доходит до 75% высоты экрана
-        const animationStartPoint = viewportHeight * 0.75;
-        
-        // Конец анимации, когда ВЕРХ контейнера моста доходит до 25% высоты экрана
-        const animationEndPoint = viewportHeight * 0.25;
-
-        // Расстояние, за которое происходит анимация
-        const animationDistance = animationStartPoint - animationEndPoint;
-        
-        // Текущая позиция верха контейнера относительно точки старта
-        const currentPosition = animationStartPoint - rect.top;
-
-        // Вычисляем прогресс анимации (от 0.0 до 1.0)
-        let progress = currentPosition / animationDistance;
-        
-        // Ограничиваем прогресс в пределах от 0 до 1
-        progress = Math.max(0, Math.min(1, progress));
-
-        // Вычисляем текущий угол на основе прогресса
-        const currentAngle = maxAngle * progress;
-
-        // Применяем трансформацию к створкам моста
-        // requestAnimationFrame делает анимацию более плавной
-        window.requestAnimationFrame(() => {
-            leftLeaf.style.transform = `rotate(${-currentAngle}deg)`;
-            rightLeaf.style.transform = `rotate(${currentAngle}deg)`;
-        });
-    }
-
-    // Вешаем обработчик на событие скролла
-    window.addEventListener('scroll', handleScroll, { passive: true });
-});
-</script>
+        <section id="contact">
+            <h2>Контакты</h2>
+            <p>Свяжитесь с нами для бронирования: +7 (XXX) XXX-XX-XX</p>
+        </section>
+    </main>
 
 </body>
 </html>
