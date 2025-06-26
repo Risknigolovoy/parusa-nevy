@@ -1,100 +1,204 @@
-/* Основные стили */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    color: #333;
-    background-color: #f4f4f4;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+:root {
+    --primary-color: #0d1b2a;
+    --secondary-color: #1b263b;
+    --accent-color: #e07a5f;
+    --text-color: #e0e1dd;
 }
 
-/* Стили для главного экрана */
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+}
+
+/* --- Анимация кораблика --- */
+
 .hero {
     position: relative;
-    height: 100vh;
+    height: 60vh;
+    min-height: 400px;
+    background: linear-gradient(180deg, #020111 50%, #192c43 100%);
+    overflow: hidden;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     text-align: center;
-    color: white;
-    overflow: hidden; /* Важно для анимации */
 }
 
-/* Анимация: фон с кораблем */
-.hero::before {
-    content: '';
+.water {
     position: absolute;
-    top: 0;
-    left: 0;
+    bottom: 0;
     width: 100%;
-    height: 100%;
-    background: url('https://i.ibb.co/L8VxYh3/night-city-bg.jpg') no-repeat center center/cover;
-    z-index: -2;
+    height: 30%;
+    background: #101d2e;
 }
 
-.hero::after {
-    content: '';
+.ship-container {
     position: absolute;
-    bottom: 10%; /* Расположение корабля */
-    left: -200px; /* Начальная позиция за экраном */
-    width: 200px; /* Ширина корабля */
-    height: 150px; /* Высота корабля */
-    background: url('https://i.ibb.co/Vv6jG0P/ship-silhouette.png') no-repeat center center/contain;
-    z-index: -1;
-    animation: sail 25s linear infinite; /* Анимация движения */
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px; /* Размер кораблика */
+    animation: sail 25s linear infinite, rock 4s ease-in-out infinite;
+}
+
+.ship {
+    width: 100%;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
+}
+
+.water-reflection {
+    position: absolute;
+    bottom: -15%;
+    left: 50%;
+    width: 300px;
+    height: 100%;
+    background: url('https://i.ibb.co/L5Bwz4p/ship-moskva-light.png') no-repeat center center;
+    background-size: contain;
+    transform: translateX(-50%) scaleY(-1);
+    opacity: 0.2;
+    filter: blur(5px);
+    animation: sail 25s linear infinite, rock-reflection 4s ease-in-out infinite;
 }
 
 @keyframes sail {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(calc(100vw + 200px)); /* Движение через весь экран */
-    }
+    0% { transform: translateX(-150vw); }
+    100% { transform: translateX(150vw); }
 }
 
-.hero-text h1 {
-    font-size: 3.5rem;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+@keyframes rock {
+    0%, 100% { transform: rotate(-1.5deg); }
+    50% { transform: rotate(1.5deg); }
 }
 
-/* Стили для остальных секций */
-main section {
-    padding: 60px 20px;
+@keyframes rock-reflection {
+    0%, 100% { transform: translateX(-50%) scaleY(-1) rotate(-1.5deg); }
+    50% { transform: translateX(-50%) scaleY(-1) rotate(1.5deg); }
+}
+
+.hero-text {
+    z-index: 2;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+}
+
+.hero h1 {
+    font-size: 3rem;
+    color: white;
+    margin: 0;
+}
+
+.hero h2 {
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    margin: 0;
+}
+
+/* --- Основные секции --- */
+main {
+    padding: 2rem;
+}
+
+section {
+    max-width: 1000px;
+    margin: 0 auto 4rem auto;
     text-align: center;
 }
 
-#gallery .photo-grid {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
-#gallery img {
-    max-width: 100%;
-    height: 250px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-/* Стили для цены */
-#pricing .price span {
+h2 {
     font-size: 2.5rem;
+    color: var(--accent-color);
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+}
+
+/* --- Удобства --- */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+}
+
+.feature-item {
+    background-color: var(--secondary-color);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+}
+
+.feature-item:hover {
+    transform: translateY(-10px);
+}
+
+.feature-item .icon {
+    font-size: 3rem;
+}
+
+.feature-item h3 {
+    margin: 1rem 0 0.5rem 0;
+    color: var(--text-color);
+}
+
+/* --- Галерея --- */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.gallery-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(224, 122, 95, 0.4);
+}
+
+/* --- Модальное окно --- */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.9);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 80%;
+    max-height: 80%;
+}
+
+.close-button {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
     font-weight: bold;
-    color: #007BFF;
+    transition: 0.3s;
+    cursor: pointer;
 }
 
-.button {
-    display: inline-block;
-    padding: 12px 25px;
-    background-color: #007BFF;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 1.1rem;
-    margin-top: 20px;
-    transition: background-color 0.3s;
-}
-
-.button:hover {
-    background-color: #0056b3;
+footer {
+    text-align: center;
+    padding: 2rem;
+    background-color: var(--secondary-color);
+    margin-top: 2rem;
 }
