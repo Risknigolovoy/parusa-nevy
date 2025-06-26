@@ -3,48 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ночная прогулка с дискотекой</title>
+    <title>Ночная прогулка с дискотекой на теплоходе "Москва"</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header class="hero">
-        <div class="animation-container">
+        <div class="water">
+            <div class="ship-container">
+                <img src="https://i.ibb.co/L5Bwz4p/ship-moskva-light.png" alt="Теплоход Москва" class="ship">
             </div>
+            <div class="water-reflection"></div>
+        </div>
         <div class="hero-text">
-            <h1>Ночная речная прогулка с дискотекой</h1>
-            <p>Незабываемое путешествие по огням ночного города</p>
+            <h1>Ночная прогулка с дискотекой</h1>
+            <h2>на двухпалубном теплоходе "Москва"</h2>
         </div>
     </header>
 
     <main>
-        <section id="about">
-            <h2>Что вас ждет?</h2>
-            <p>Зажигательная дискотека под открытым небом, лучшие диджеи, потрясающие виды на ночной город и море впечатлений!</p>
+        <section class="about">
+            <h2>О мероприятии</h2>
+            <p>Приглашаем вас на незабываемую ночную прогулку по реке под зажигательные сеты от нашего диджея! Вас ждет современная музыка, профессиональный свет, бар с широким выбором напитков и потрясающие виды ночного города с воды.</p>
         </section>
 
-        <section id="gallery">
-            <h2>Галерея</h2>
-            <div class="photo-grid">
-                <img src="URL_ВАШЕЙ_ФОТОГРАФИИ_1.PNG" alt="Фото с прогулки 1">
-                <img src="URL_ВАШЕЙ_ФОТОГРАФИИ_2.PNG" alt="Фото с прогулки 2">
-                <img src="URL_ВАШЕЙ_ФОТОГРАФИИ_3.PNG" alt="Фото с прогулки 3">
+        <section class="features">
+            <h2>На борту для вашего комфорта</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <span class="icon">🎧</span>
+                    <h3>Профессиональный Диджей</h3>
+                    <p>Танцевальные хиты и современная музыка всю ночь.</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">🍹</span>
+                    <h3>Бар и напитки</h3>
+                    <p>Широкий ассортимент коктейлей, напитков и закусок.</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">🚬</span>
+                    <h3>Места для курения</h3>
+                    <p>Специально оборудованные зоны на открытой палубе.</p>
+                </div>
+                <div class="feature-item">
+                    <span class="icon">🚻</span>
+                    <h3>Уборная</h3>
+                    <p>Современные и чистые туалетные комнаты на борту.</p>
+                </div>
             </div>
         </section>
 
-        <section id="pricing">
-            <h2>Стоимость</h2>
-            <div class="price">
-                <p>от <span>1500 ₽</span></p>
-                <a href="#contact" class="button">Забронировать</a>
+        <section class="gallery">
+            <h2>Фотогалерея</h2>
+            <div class="gallery-grid">
+                <img src="https://images.unsplash.com/photo-1519751068834-4b57b91b92c2?w=800" alt="Дискотека на корабле" class="gallery-image">
+                <img src="https://images.unsplash.com/photo-1571862325997-6a1e1b62a32c?w=800" alt="Бар на теплоходе" class="gallery-image">
+                <img src="https://images.unsplash.com/photo-1607986722971-de64d39e25a4?w=800" alt="Вид с палубы ночью" class="gallery-image">
+                <img src="https://images.unsplash.com/photo-1544457070-4cd773b4d71e?w=800" alt="Диджей за пультом" class="gallery-image">
+                <img src="https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?w=800" alt="Танцующие люди" class="gallery-image">
+                <img src="https://images.unsplash.com/photo-1551783224-9a7c3693a1c4?w=800" alt="Ночной город с воды" class="gallery-image">
             </div>
-        </section>
-
-        <section id="contact">
-            <h2>Контакты</h2>
-            <p>Свяжитесь с нами для бронирования: +7 (XXX) XXX-XX-XX</p>
         </section>
     </main>
 
+    <footer>
+        <p>&copy; 2025 Ночные прогулки на теплоходе "Москва"</p>
+    </footer>
+
+    <div id="imageModal" class="modal">
+        <span class="close-button">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
